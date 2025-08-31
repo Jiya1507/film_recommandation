@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Movie Recommender</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Movie & Series Recommender</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -14,24 +14,18 @@
             transform: translateY(-5px);
             transition: all 0.3s ease;
         }
-        .chat-message {
-            max-width: 80%;
-        }
-        .user-message {
-            margin-left: auto;
-        }
-        .chat-container {
-            height: 400px;
+        /* Scrollbar styles */
+        .scrollbar-y {
             overflow-y: auto;
+            max-height: 400px;
         }
-        /* Custom scrollbar */
-        .chat-container::-webkit-scrollbar {
+        .scrollbar-y::-webkit-scrollbar {
             width: 6px;
         }
-        .chat-container::-webkit-scrollbar-track {
+        .scrollbar-y::-webkit-scrollbar-track {
             background: #374151;
         }
-        .chat-container::-webkit-scrollbar-thumb {
+        .scrollbar-y::-webkit-scrollbar-thumb {
             background: #15176f;
             border-radius: 3px;
         }
@@ -41,8 +35,8 @@
     <div class="container mx-auto px-4 py-8">
         <!-- Header -->
         <header class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-indigo-400 mb-2">AI Movie Recommender</h1>
-            <p class="text-gray-400 max-w-2xl mx-auto">Get movie recommendations powered by The Movie Database API</p>
+            <h1 class="text-4xl font-bold text-indigo-400 mb-2">AI Movie & Series Recommender</h1>
+            <p class="text-gray-400 max-w-2xl mx-auto">Get movie and series recommendations powered by The Movie Database API</p>
         </header>
 
         <div class="flex flex-col lg:flex-row gap-8">
@@ -53,10 +47,10 @@
                     <div class="flex flex-col md:flex-row gap-6">
                         <!-- Search Input -->
                         <div class="flex-1">
-                            <label for="search" class="block text-sm font-medium text-gray-300 mb-2">Search for movies</label>
+                            <label for="search" class="block text-sm font-medium text-gray-300 mb-2">Search for movies or series</label>
                             <div class="relative">
-                                <input type="text" id="search" placeholder="Type a movie you like..." 
-                                    class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <input type="text" id="search" placeholder="Type a movie or series you like..." 
+                                    class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                                 <button id="search-btn" class="absolute right-2 top-2 bg-indigo-600 hover:bg-indigo-700 text-white py-1 px-4 rounded-lg transition">
                                     Search
                                 </button>
@@ -73,6 +67,7 @@
                                 <button class="genre-btn bg-gray-700 hover:bg-indigo-600 text-white py-1 px-3 rounded-full text-sm transition" data-genre="878">Sci-Fi</button>
                                 <button class="genre-btn bg-gray-700 hover:bg-indigo-600 text-white py-1 px-3 rounded-full text-sm transition" data-genre="27">Horror</button>
                                 <button class="genre-btn bg-gray-700 hover:bg-indigo-600 text-white py-1 px-3 rounded-full text-sm transition" data-genre="10749">Romance</button>
+                                <button class="genre-btn bg-gray-700 hover:bg-indigo-600 text-white py-1 px-3 rounded-full text-sm transition" data-genre="99">Documentary</button>
                             </div>
                         </div>
                     </div>
@@ -99,27 +94,17 @@
                         </div>
                     </div>
                     <div id="recommendations" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Movie cards will be inserted here by JavaScript -->
+                        <!-- Movie/Series cards inserted here -->
                     </div>
                 </div>
             </div>
 
-            <!-- Discussion Room -->
+            <!-- Streaming Series/Indian Movies Section -->
             <div class="lg:w-1/3">
-                <div class="bg-gray-800 rounded-xl p-6 shadow-lg sticky top-4">
-                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Discussion Room</h2>
-                    <div class="chat-container mb-4 space-y-4" id="chat-messages">
-                        <!-- Messages will appear here -->
-                        <div class="text-center text-gray-400 py-4">
-                            Start a conversation about movies!
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <input type="text" id="chat-input" placeholder="Type your message..." 
-                            class="flex-1 bg-gray-700 border border-gray-600 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <button id="send-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition">
-                            Send
-                        </button>
+                <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">Streaming & Indian Picks</h2>
+                    <div id="streaming-section" class="scrollbar-y space-y-6">
+                        <!-- Streaming series/movies will be dynamically inserted here -->
                     </div>
                 </div>
             </div>
@@ -140,344 +125,361 @@
                         </svg>
                     </button>
                     <div id="movie-modal-content" class="p-6">
-                        <!-- Movie details will be inserted here -->
+                        <!-- Movie details inserted here -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // TMDB API Configuration with your API key
-        const TMDB_API_KEY = '8909fbe3a07f0ca97bbfd19f2a87f297';
-        const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-        const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+<script>
+    const TMDB_API_KEY = '8909fbe3a07f0ca97bbfd19f2a87f297';
+    const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+    const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
-        // DOM Elements
-        const searchInput = document.getElementById('search');
-        const searchBtn = document.getElementById('search-btn');
-        const genreBtns = document.querySelectorAll('.genre-btn');
-        const recommendBtn = document.getElementById('recommend-btn');
-        const resultsSection = document.getElementById('results-section');
-        const recommendationsContainer = document.getElementById('recommendations');
-        const loadingSpinner = document.getElementById('loading');
-        const movieModal = document.getElementById('movie-modal');
-        const closeModalBtn = document.getElementById('close-modal');
-        const movieModalContent = document.getElementById('movie-modal-content');
-        const sortBySelect = document.getElementById('sort-by');
-        const chatMessages = document.getElementById('chat-messages');
-        const chatInput = document.getElementById('chat-input');
-        const sendBtn = document.getElementById('send-btn');
+    // DOM Elements
+    const searchInput = document.getElementById('search');
+    const searchBtn = document.getElementById('search-btn');
+    const genreBtns = document.querySelectorAll('.genre-btn');
+    const recommendBtn = document.getElementById('recommend-btn');
+    const resultsSection = document.getElementById('results-section');
+    const recommendationsContainer = document.getElementById('recommendations');
+    const loadingSpinner = document.getElementById('loading');
+    const movieModal = document.getElementById('movie-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const movieModalContent = document.getElementById('movie-modal-content');
+    const sortBySelect = document.getElementById('sort-by');
+    const streamingSection = document.getElementById('streaming-section');
 
-        // State
-        let selectedGenres = [];
-        let currentMovies = [];
-        let currentUser = `User${Math.floor(Math.random() * 1000)}`; // Random username
+    let selectedGenres = [];
+    let currentMovies = [];
 
-        // Event Listeners
-        searchBtn.addEventListener('click', searchMovies);
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchMovies();
-        });
+    // Event listeners
+    searchBtn.addEventListener('click', searchMovies);
+    searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchMovies(); });
 
-        genreBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const genre = btn.dataset.genre;
-                if (selectedGenres.includes(genre)) {
-                    selectedGenres = selectedGenres.filter(g => g !== genre);
-                    btn.classList.remove('bg-indigo-600');
-                    btn.classList.add('bg-gray-700');
-                } else {
-                    selectedGenres.push(genre);
-                    btn.classList.remove('bg-gray-700');
-                    btn.classList.add('bg-indigo-600');
-                }
-            });
-        });
-
-        recommendBtn.addEventListener('click', getRecommendations);
-        closeModalBtn.addEventListener('click', () => {
-            movieModal.classList.add('hidden');
-        });
-
-        sortBySelect.addEventListener('change', () => {
-            if (currentMovies.length > 0) {
-                sortMovies(currentMovies);
-            }
-        });
-
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-
-        // Functions
-        function showLoading(show) {
-            if (show) {
-                loadingSpinner.classList.remove('hidden');
+    genreBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const genre = btn.dataset.genre;
+            if (selectedGenres.includes(genre)) {
+                selectedGenres = selectedGenres.filter(g => g !== genre);
+                btn.classList.remove('bg-indigo-600');
+                btn.classList.add('bg-gray-700');
             } else {
-                loadingSpinner.classList.add('hidden');
+                selectedGenres.push(genre);
+                btn.classList.remove('bg-gray-700');
+                btn.classList.add('bg-indigo-600');
             }
-        }
-
-        async function searchMovies() {
-            const query = searchInput.value.trim();
-            if (!query) return;
-
-            showLoading(true);
-            
-            try {
-                const response = await fetch(`${TMDB_BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}`);
-                const data = await response.json();
-                
-                if (data.results && data.results.length > 0) {
-                    currentMovies = data.results;
-                    sortMovies(data.results);
-                } else {
-                    displayNoResults();
-                }
-            } catch (error) {
-                console.error('Search error:', error);
-                displayError();
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        async function getRecommendations() {
-            showLoading(true);
-            
-            try {
-                let url;
-                if (selectedGenres.length > 0) {
-                    // Get recommendations by genre, sorted by vote average
-                    url = `${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc&vote_count.gte=100&with_genres=${selectedGenres.join(',')}`;
-                } else if (currentMovies.length > 0) {
-                    // Get recommendations similar to the first searched movie, sorted by vote average
-                    url = `${TMDB_BASE_URL}/movie/${currentMovies[0].id}/recommendations?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc`;
-                } else {
-                    // Get popular movies as fallback, but still sorted by rating
-                    url = `${TMDB_BASE_URL}/movie/popular?api_key=${TMDB_API_KEY}&sort_by=vote_average.desc`;
-                }
-                
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                if (data.results && data.results.length > 0) {
-                    currentMovies = data.results;
-                    sortMovies(data.results);
-                } else {
-                    displayNoResults();
-                }
-            } catch (error) {
-                console.error('Recommendation error:', error);
-                displayError();
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        function sortMovies(movies) {
-            const sortBy = sortBySelect.value;
-            let sortedMovies = [...movies];
-            
-            switch(sortBy) {
-                case 'rating':
-                    sortedMovies.sort((a, b) => b.vote_average - a.vote_average);
-                    break;
-                case 'newest':
-                    sortedMovies.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
-                    break;
-                case 'popularity':
-                default:
-                    sortedMovies.sort((a, b) => b.popularity - a.popularity);
-                    break;
-            }
-            
-            displayMovies(sortedMovies.slice(0, 12));
-        }
-
-        function displayMovies(movies) {
-            recommendationsContainer.innerHTML = '';
-            
-            if (movies.length === 0) {
-                displayNoResults();
-                return;
-            }
-            
-            movies.forEach(movie => {
-                const movieCard = document.createElement('div');
-                movieCard.className = 'movie-card bg-gray-800 rounded-lg overflow-hidden shadow-md transition duration-300 cursor-pointer';
-                movieCard.innerHTML = `
-                    <img src="${movie.poster_path ? IMAGE_BASE_URL + movie.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster'}" 
-                        alt="${movie.title}" class="w-full h-64 object-cover">
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg mb-1">${movie.title}</h3>
-                        <div class="flex justify-between text-sm text-gray-400 mb-2">
-                            <span>${movie.release_date ? movie.release_date.substring(0, 4) : 'N/A'}</span>
-                            <span class="flex items-center">
-                                <svg class="w-4 h-4 text-yellow-400 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                                ${movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}
-                            </span>
-                        </div>
-                    </div>
-                `;
-                
-                movieCard.addEventListener('click', () => {
-                    viewMovieDetails(movie.id);
-                    // Add movie to chat discussion
-                    addSystemMessage(`Now discussing: ${movie.title} (${movie.release_date ? movie.release_date.substring(0, 4) : 'N/A'})`);
-                });
-                
-                recommendationsContainer.appendChild(movieCard);
-            });
-            
-            resultsSection.classList.remove('hidden');
-        }
-
-        async function viewMovieDetails(movieId) {
-            showLoading(true);
-            
-            try {
-                const response = await fetch(`${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&append_to_response=credits,videos`);
-                const movie = await response.json();
-                
-                // Format genres
-                const genres = movie.genres ? movie.genres.map(g => g.name).join(', ') : 'Unknown';
-                
-                // Find trailer
-                const trailer = movie.videos?.results?.find(v => v.type === 'Trailer');
-                
-                movieModalContent.innerHTML = `
-                    <div class="flex flex-col md:flex-row gap-6">
-                        <div class="md:w-1/3">
-                            <img src="${movie.poster_path ? IMAGE_BASE_URL + movie.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster'}" 
-                                alt="${movie.title}" class="w-full rounded-lg">
-                        </div>
-                        <div class="md:w-2/3">
-                            <h2 class="text-2xl font-bold mb-2">${movie.title}</h2>
-                            <div class="flex items-center gap-4 mb-4">
-                                <span class="flex items-center text-yellow-400">
-                                    <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                    ${movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}
-                                </span>
-                                <span>${movie.runtime ? `${movie.runtime} min` : ''}</span>
-                                <span>${movie.release_date ? movie.release_date.substring(0, 4) : ''}</span>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <span class="text-sm text-gray-400">${genres}</span>
-                            </div>
-                            
-                            ${trailer ? `
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold mb-2">Trailer</h3>
-                                <div class="aspect-w-16 aspect-h-9">
-                                    <iframe class="w-full h-64 rounded-lg" src="https://www.youtube.com/embed/${trailer.key}" 
-                                        frameborder="0" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                            ` : ''}
-                            
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold mb-2">Overview</h3>
-                                <p class="text-gray-300">${movie.overview || 'No overview available.'}</p>
-                            </div>
-                            
-                            ${movie.credits?.crew?.find(p => p.job === 'Director') ? `
-                            <div class="mb-4">
-                                <h3 class="text-lg font-semibold mb-2">Director</h3>
-                                <p class="text-gray-300">${movie.credits.crew.find(p => p.job === 'Director').name}</p>
-                            </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-                
-                movieModal.classList.remove('hidden');
-            } catch (error) {
-                console.error('Failed to fetch movie details:', error);
-                movieModalContent.innerHTML = `
-                    <div class="text-center py-10">
-                        <p class="text-red-400">Failed to load movie details. Please try again.</p>
-                    </div>
-                `;
-                movieModal.classList.remove('hidden');
-            } finally {
-                showLoading(false);
-            }
-        }
-
-        function displayNoResults() {
-            recommendationsContainer.innerHTML = `
-                <div class="col-span-full text-center py-10">
-                    <p class="text-gray-400">No results found. Try different search terms or filters.</p>
-                </div>
-            `;
-            resultsSection.classList.remove('hidden');
-        }
-
-        function displayError() {
-            recommendationsContainer.innerHTML = `
-                <div class="col-span-full text-center py-10">
-                    <p class="text-red-400">An error occurred. Please try again later.</p>
-                </div>
-            `;
-            resultsSection.classList.remove('hidden');
-        }
-
-        // Chat functions
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (!message) return;
-            
-            addMessage(currentUser, message, true);
-            chatInput.value = '';
-            
-            // Simulate response after a short delay
-            setTimeout(() => {
-                const responses = [
-                    "That's an interesting point about this movie!",
-                    "I loved that film too! What did you think of the ending?",
-                    "Have you seen other movies by this director?",
-                    "That's one of my favorites! The cinematography was amazing.",
-                    "What did you think about the character development in this movie?"
-                ];
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addMessage("MovieBot", randomResponse, false);
-            }, 1000);
-        }
-
-        function addMessage(sender, message, isUser) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message rounded-lg p-3 ${isUser ? 'user-message bg-indigo-600' : 'bg-gray-700'}`;
-            messageDiv.innerHTML = `
-                <div class="font-semibold text-sm ${isUser ? 'text-indigo-200' : 'text-gray-300'}">${sender}</div>
-                <div class="mt-1">${message}</div>
-            `;
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function addSystemMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'text-center text-gray-400 text-sm my-2';
-            messageDiv.textContent = message;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Initialize with popular movies
-        window.addEventListener('load', () => {
-            getRecommendations();
-            addSystemMessage("Welcome to the Movie Discussion Room!");
-            addSystemMessage("Share your thoughts about the recommended movies!");
         });
-    </script>
+    });
+
+    recommendBtn.addEventListener('click', getRecommendations);
+    closeModalBtn.addEventListener('click', () => movieModal.classList.add('hidden'));
+    sortBySelect.addEventListener('change', () => {
+        if (currentMovies.length > 0) sortMovies(currentMovies);
+    });
+
+    // Loading spinner toggle
+    function showLoading(show) {
+        loadingSpinner.classList.toggle('hidden', !show);
+    }
+
+    // Search movies or series by user query (multi search)
+    async function searchMovies() {
+        const query = searchInput.value.trim();
+        if (!query) return;
+        showLoading(true);
+        try {
+            const response = await fetch(`${TMDB_BASE_URL}/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`);
+            const data = await response.json();
+            if (data.results && data.results.length > 0) {
+                // Filter to movies and tv shows only
+                currentMovies = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
+                sortMovies(currentMovies);
+            } else {
+                displayNoResults();
+            }
+        } catch {
+            displayError();
+        }
+        showLoading(false);
+    }
+
+    // Get recommendations filtered by selected genres or show trending if none selected
+    async function getRecommendations() {
+        if (selectedGenres.length === 0) {
+            // No genres selected - fetch trending mixed media weekly
+            try {
+                showLoading(true);
+                const response = await fetch(`${TMDB_BASE_URL}/trending/all/week?api_key=${TMDB_API_KEY}`);
+                const data = await response.json();
+                if (data.results && data.results.length > 0) {
+                    currentMovies = data.results.filter(item => item.media_type === 'movie' || item.media_type === 'tv');
+                    sortMovies(currentMovies);
+                } else {
+                    displayNoResults();
+                }
+            } catch {
+                displayError();
+            } finally {
+                showLoading(false);
+            }
+            return;
+        }
+
+        // Genres selected: fetch movies and tv separately and merge
+        try {
+            showLoading(true);
+
+            const moviePromise = fetch(`${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${selectedGenres.join(',')}&sort_by=vote_average.desc&vote_count.gte=100&include_adult=false`);
+            const tvPromise = fetch(`${TMDB_BASE_URL}/discover/tv?api_key=${TMDB_API_KEY}&with_genres=${selectedGenres.join(',')}&sort_by=vote_average.desc&vote_count.gte=100&include_adult=false`);
+
+            const [movieRes, tvRes] = await Promise.all([moviePromise, tvPromise]);
+            const movieData = await movieRes.json();
+            const tvData = await tvRes.json();
+
+            const combinedResults = [];
+            if (movieData.results) combinedResults.push(...movieData.results.map(m => ({ ...m, media_type: 'movie' })));
+            if (tvData.results) combinedResults.push(...tvData.results.map(t => ({ ...t, media_type: 'tv' })));
+
+            if (combinedResults.length > 0) {
+                currentMovies = combinedResults;
+                sortMovies(combinedResults);
+            } else {
+                displayNoResults();
+            }
+        } catch {
+            displayError();
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Sort movies and tv shows based on user selected criteria
+    function sortMovies(movies) {
+        const sortBy = sortBySelect.value;
+        let sorted = [...movies];
+        switch (sortBy) {
+            case 'rating':
+                sorted.sort((a, b) => (b.vote_average || 0) - (a.vote_average || 0));
+                break;
+            case 'newest':
+                sorted.sort((a, b) => new Date(b.release_date || b.first_air_date) - new Date(a.release_date || a.first_air_date));
+                break;
+            case 'popularity':
+            default:
+                sorted.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+                break;
+        }
+        displayMovies(sorted.slice(0, 12));
+    }
+
+    // Display movie/series cards
+    function displayMovies(items) {
+        recommendationsContainer.innerHTML = '';
+        if (items.length === 0) {
+            displayNoResults();
+            return;
+        }
+        items.forEach(item => {
+            const title = item.title || item.name || 'Untitled';
+            const year = (item.release_date || item.first_air_date || '').substring(0, 4) || 'N/A';
+            const poster = item.poster_path ? IMAGE_BASE_URL + item.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster';
+            const rating = item.vote_average ? item.vote_average.toFixed(1) : 'N/A';
+
+            const card = document.createElement('div');
+            card.className = 'movie-card bg-gray-800 rounded-lg overflow-hidden shadow-md cursor-pointer transition duration-300 hover:translate-y-[-5px]';
+            card.innerHTML = `
+                <img src="${poster}" alt="${title}" class="w-full h-64 object-cover" />
+                <div class="p-4">
+                    <h3 class="font-semibold text-lg mb-1">${title}</h3>
+                    <div class="flex justify-between text-sm text-gray-400 mb-2">
+                        <span>${year}</span>
+                        <span class="flex items-center text-yellow-400">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            ${rating}
+                        </span>
+                    </div>
+                </div>`;
+            card.addEventListener('click', () => viewMovieDetails(item.id, item.media_type || 'movie'));
+            recommendationsContainer.appendChild(card);
+        });
+        resultsSection.classList.remove('hidden');
+    }
+
+    // Display no results message
+    function displayNoResults() {
+        recommendationsContainer.innerHTML = `
+            <div class="col-span-full text-center py-10">
+                <p class="text-gray-400">No results found. Try different search terms or filters.</p>
+            </div>`;
+        resultsSection.classList.remove('hidden');
+    }
+
+    // Display error message
+    function displayError() {
+        recommendationsContainer.innerHTML = `
+            <div class="col-span-full text-center py-10">
+                <p class="text-red-400">An error occurred. Please try again later.</p>
+            </div>`;
+        resultsSection.classList.remove('hidden');
+    }
+
+    // Show detailed modal info for movie or TV
+    async function viewMovieDetails(id, type = 'movie') {
+        showLoading(true);
+        try {
+            const response = await fetch(`${TMDB_BASE_URL}/${type}/${id}?api_key=${TMDB_API_KEY}&append_to_response=credits,videos,watch/providers`);
+            const data = await response.json();
+
+            const genres = data.genres ? data.genres.map(g => g.name).join(', ') : 'Unknown';
+            const trailer = data.videos?.results?.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+            const providerData = data['watch/providers']?.results?.IN; // Indian providers info if available
+            let providersHTML = '';
+            if (providerData) {
+                if (providerData.flatrate) {
+                    providersHTML = `<p><strong>Available on:</strong> ${providerData.flatrate.map(p => p.provider_name).join(', ')}</p>`;
+                }
+            }
+
+            movieModalContent.innerHTML = `
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="md:w-1/3">
+                        <img src="${data.poster_path ? IMAGE_BASE_URL + data.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster'}" alt="${data.title || data.name}" class="w-full rounded-lg"/>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="text-2xl font-bold mb-2">${data.title || data.name}</h2>
+                        <div class="flex items-center gap-4 mb-4 text-yellow-400">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <span>${data.vote_average ? data.vote_average.toFixed(1) : 'N/A'}</span>
+                            <span>${data.runtime ? `${data.runtime} min` : (data.episode_run_time ? `${data.episode_run_time[0]} min per episode` : '')}</span>
+                            <span>${(data.release_date || data.first_air_date || '').substring(0, 4)}</span>
+                        </div>
+                        <div class="mb-2 text-gray-400">${genres}</div>
+                        ${providersHTML ? `<div class="mb-4">${providersHTML}</div>` : ''}
+                        ${trailer ? `
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold mb-2">Trailer</h3>
+                            <div class="aspect-w-16 aspect-h-9">
+                                <iframe class="w-full h-64 rounded-lg" src="https://www.youtube.com/embed/${trailer.key}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>` : ''}
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Overview</h3>
+                            <p class="text-gray-300">${data.overview || 'No overview available.'}</p>
+                        </div>
+                        ${data.credits?.crew?.find(p => p.job === 'Director') ? `
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold mb-2">Director</h3>
+                            <p class="text-gray-300">${data.credits.crew.find(p => p.job === 'Director').name}</p>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+            movieModal.classList.remove('hidden');
+        } catch {
+            movieModalContent.innerHTML = `<div class="text-center py-10 text-red-400">Failed to load details.</div>`;
+            movieModal.classList.remove('hidden');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Load streaming (Netflix, Amazon Prime) trending series and Indian popular movies on sidebar
+    async function loadStreamingAndIndianContent() {
+        showLoading(true);
+        streamingSection.innerHTML = '<p class="text-gray-400">Loading streaming & Indian picks...</p>';
+
+        try {
+            // Netflix provider id = 8, Amazon Prime = 9; watch_region=IN for India
+            const netflixPromise = fetch(`${TMDB_BASE_URL}/discover/tv?api_key=${TMDB_API_KEY}&with_watch_providers=8&watch_region=IN&sort_by=popularity.desc&language=en-US`);
+            const primePromise = fetch(`${TMDB_BASE_URL}/discover/tv?api_key=${TMDB_API_KEY}&with_watch_providers=9&watch_region=IN&sort_by=popularity.desc&language=en-US`);
+            // Indian movies filtered by Indian languages
+            const indianMoviesPromise = fetch(`${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&region=IN&with_original_language=hi|ta|te|ml|kn|mr|bn&sort_by=popularity.desc&language=en-US`);
+
+            const [netflixRes, primeRes, indianMoviesRes] = await Promise.all([netflixPromise, primePromise, indianMoviesPromise]);
+
+            const netflixData = await netflixRes.json();
+            const primeData = await primeRes.json();
+            const indianMoviesData = await indianMoviesRes.json();
+
+            streamingSection.innerHTML = '';
+
+            function createSectionTitle(title) {
+                const h3 = document.createElement('h3');
+                h3.textContent = title;
+                h3.className = 'text-xl font-semibold text-indigo-400 mb-2 mt-4 border-b border-indigo-400 pb-1';
+                return h3;
+            }
+
+            function createStreamingCard(item, type, platformName) {
+                const title = item.name || item.title || 'Untitled';
+                const year = (item.first_air_date || item.release_date || '').substring(0, 4) || 'N/A';
+                const poster = item.poster_path ? IMAGE_BASE_URL + item.poster_path : 'https://via.placeholder.com/500x750?text=No+Poster';
+                const rating = item.vote_average ? item.vote_average.toFixed(1) : 'N/A';
+
+                const card = document.createElement('div');
+                card.className = 'movie-card bg-gray-700 rounded-lg shadow p-4 flex cursor-pointer hover:bg-indigo-600 transition';
+                card.innerHTML = `
+                    <img src="${poster}" alt="${title}" class="w-16 h-24 object-cover rounded-md mr-4 flex-shrink-0" />
+                    <div class="flex flex-col justify-center">
+                        <h3 class="font-semibold text-lg">${title}</h3>
+                        <p class="text-sm text-gray-300">${year} &bull; ${platformName}</p>
+                        <p class="text-yellow-400 flex items-center text-sm mt-1">
+                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            ${rating}
+                        </p>
+                    </div>
+                `;
+                card.addEventListener('click', () => viewMovieDetails(item.id, type));
+                return card;
+            }
+
+            // Netflix
+            if (netflixData.results && netflixData.results.length > 0) {
+                streamingSection.appendChild(createSectionTitle('Netflix Trending Series'));
+                netflixData.results.slice(0, 5).forEach(item => {
+                    streamingSection.appendChild(createStreamingCard(item, 'tv', 'Netflix'));
+                });
+            }
+
+            // Amazon Prime
+            if (primeData.results && primeData.results.length > 0) {
+                streamingSection.appendChild(createSectionTitle('Amazon Prime Series'));
+                primeData.results.slice(0, 5).forEach(item => {
+                    streamingSection.appendChild(createStreamingCard(item, 'tv', 'Amazon Prime'));
+                });
+            }
+
+            // Indian movies
+            if (indianMoviesData.results && indianMoviesData.results.length > 0) {
+                streamingSection.appendChild(createSectionTitle('Popular Indian Movies'));
+                indianMoviesData.results.slice(0, 5).forEach(item => {
+                    streamingSection.appendChild(createStreamingCard(item, 'movie', 'Indian Cinema'));
+                });
+            }
+
+            if (streamingSection.innerHTML.trim() === '') {
+                streamingSection.innerHTML = '<p class="text-gray-400">No streaming or Indian content found currently.</p>';
+            }
+        } catch (error) {
+            console.error('Streaming content load error:', error);
+            streamingSection.innerHTML = '<p class="text-red-400">Failed to load streaming & Indian picks.</p>';
+        }
+        showLoading(false);
+    }
+
+    // Initialize on load
+    window.addEventListener('load', () => {
+        getRecommendations();
+        loadStreamingAndIndianContent();
+    });
+</script>
 </body>
 </html>
